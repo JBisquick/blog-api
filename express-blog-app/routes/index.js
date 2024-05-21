@@ -3,27 +3,33 @@ const router = express.Router();
 
 const post_controller = require('../controller/postController')
 const user_controller = require('../controller/userController')
+const comment_controller = require('../controller/commentController')
 
 router.get("/", function (req, res) {
   res.redirect("/posts");
 });
 
-// Posts
+// Posts Routing
 router.get('/posts', post_controller.get_all_posts);
-
-router.put('/posts', post_controller.create_post);
 
 router.get('/posts/:id', post_controller.get_post);
 
-router.post('/posts/:id', post_controller.update_post);
+router.post('/posts', post_controller.create_post);
+
+router.put('/posts/:id', post_controller.update_post);
 
 router.delete('/posts/:id', post_controller.delete_post);
 
-// Users
+// Users Routing
 router.post('/login', user_controller.log_in);
 
-router.post('/signup', user_controller.sign_up);
+router.put('/signup', user_controller.sign_up);
 
 router.post('/logout', user_controller.log_out);
+
+// Comments Routing
+router.post('/comments', comment_controller.create_comment)
+
+router.delete('/comments/:id', comment_controller.delete_comment);
 
 module.exports = router;
