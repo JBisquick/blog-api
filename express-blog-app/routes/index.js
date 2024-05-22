@@ -23,7 +23,7 @@ router.delete('/posts/:id', post_controller.delete_post);
 // Users Routing
 router.post('/login', user_controller.log_in);
 
-router.put('/signup', user_controller.sign_up);
+router.post('/signup', user_controller.sign_up);
 
 router.post('/logout', user_controller.log_out);
 
