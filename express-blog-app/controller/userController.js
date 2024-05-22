@@ -6,8 +6,8 @@ const User = require('../models/user');
 exports.sign_up = [
   body('username')
     .trim()
-    .isLength({ min: 1, max: 20 })
-    .withMessage('Username must be between 1 to 20 characters')
+    .isLength({ min: 4, max: 20 })
+    .withMessage('Username must be between 4 to 20 characters')
     .escape(),
   body('password')
     .trim()
@@ -25,11 +25,9 @@ exports.sign_up = [
   asyncHandler( async(req, res, next) => {
     const errors = validationResult(req);
 
-    console.log(req.body);
-
     const nameTaken = await User.findOne({ username: req.body.username })
     if (nameTaken !== null) {
-      errors.push("Username is already taken");
+      errors.errors.push({ msg: "Username is already taken" });
     }
     if (!errors.isEmpty()) {
       res.json({
