@@ -17,7 +17,7 @@ router.get('/posts/:id', post_controller.get_post);
 
 router.post('/posts', verifyToken, post_controller.create_post);
 
-router.put('/posts/:id', post_controller.update_post);
+router.put('/posts/:id', verifyToken, post_controller.update_post);
 
 router.delete('/posts/:id', post_controller.delete_post);
 
