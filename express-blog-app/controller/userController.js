@@ -76,14 +76,10 @@ exports.log_in = [
       })
     }
 
-    jwt.sign({ user: user }, process.env.JTW_SECRET,{ expiresIn: '1d' }, (err, token) => {
+    jwt.sign({ user: user }, process.env.JWT_SECRET, { expiresIn: '1d' }, (err, token) => {
       res.json({
         token: token
       });
     });
   })
 ];
-
-exports.log_out = asyncHandler( async(req, res, next) => {
-  res.send('Post Log Out');
-});

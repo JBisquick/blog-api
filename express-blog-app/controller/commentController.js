@@ -5,5 +5,5 @@ exports.create_comment = asyncHandler( async(req, res, next) => {
 });
 
 exports.delete_comment = asyncHandler( async(req, res, next) => {
-    res.send('Delete Comment');
-  });
+  res.send('Delete Comment');
+});
