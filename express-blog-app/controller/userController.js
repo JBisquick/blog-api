@@ -1,7 +1,9 @@
+require('dotenv').config()
 const asyncHandler = require('express-async-handler');
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const User = require('../models/user');
+const jwt = require('jsonwebtoken');
 
 exports.sign_up = [
   body('username')
@@ -51,9 +53,36 @@ exports.sign_up = [
   })
 ];
 
-exports.log_in = asyncHandler( async(req, res, next) => {
-  res.send('Post Log In');
-});
+exports.log_in = [
+  body('username')
+    .trim()
+    .escape(),
+  body('password')
+    .trim()
+    .escape(),
+
+  asyncHandler( async(req, res, next) => {
+    const user = await User.findOne({username: req.body.username});
+    if (!user) {
+      res.json({
+        message: 'Incorrect Username'
+      })
+    }
+    const match = await bcrypt.compare(req.body.password, user.password);
+
+    if (!match) {
+      res.json({
+        message: 'Incorrect Password'
+      })
+    }
+
+    jwt.sign({ user: user }, process.env.JTW_SECRET,{ expiresIn: '1d' }, (err, token) => {
+      res.json({
+        token: token
+      });
+    });
+  })
+];
 
 exports.log_out = asyncHandler( async(req, res, next) => {
   res.send('Post Log Out');
