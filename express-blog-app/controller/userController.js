@@ -27,7 +27,7 @@ exports.sign_up = [
   asyncHandler( async(req, res, next) => {
     const errors = validationResult(req);
 
-    const nameTaken = await User.findOne({ username: req.body.username })
+    const nameTaken = await User.findOne({ username: req.body.username }).exec();
     if (nameTaken !== null) {
       errors.errors.push({ msg: "Username is already taken" });
     }
@@ -62,7 +62,7 @@ exports.log_in = [
     .escape(),
 
   asyncHandler( async(req, res, next) => {
-    const user = await User.findOne({username: req.body.username});
+    const user = await User.findOne({username: req.body.username}).exec();
     if (!user) {
       res.json({
         message: 'Incorrect Username'

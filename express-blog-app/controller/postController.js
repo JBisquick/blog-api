@@ -117,7 +117,7 @@ exports.update_post = [
       title: req.body.title,
       content: req.body.content,
       public: req.body.public,
-    });
+    }).exec();
     res.json({
       msg: 'Success!!!'
     });

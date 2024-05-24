@@ -46,6 +46,29 @@ exports.create_comment = [
   })
 ];
 
-exports.delete_comment = asyncHandler( async(req, res, next) => {
-  res.send('Delete Comment');
-});
+exports.delete_comment = [
+  (req, res, next) => {
+    jwt.verify(req.token, process.env.JWT_SECRET, (err, authData) => {
+      if (err) {
+        res.sendStatus(403);
+      } else {
+        req.user = authData.user;
+        next();
+      }
+    })
+  },
+
+  asyncHandler( async(req, res, next) => {
+    const comment = await Comment.find({_id: req.params.id}).exec();
+
+    if (comment.user === req.user._id) {
+      res.sendStatus(403);
+      return;
+    }
+
+    await Comment.findByIdAndDelete(req.params.id).exec();
+    res.json({
+      msg: 'Success!!!'
+    });
+  })
+];
