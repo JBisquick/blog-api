@@ -2,6 +2,7 @@ require('dotenv').config();
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require('express-validator');
 const Post = require('../models/post');
+const Comment = require('../models/comment');
 const jwt = require('jsonwebtoken');
 
 exports.get_all_posts = asyncHandler( async(req, res, next) => {
@@ -16,7 +17,15 @@ exports.get_all_posts = asyncHandler( async(req, res, next) => {
 });
 
 exports.get_post = asyncHandler( async(req, res, next) => {
-  res.send('Get Post');
+  const [post, postComments] = await Promise.all([
+    Post.findById(req.params.id).exec(),
+    Comment.find({ post: req.params.id }).exec()
+  ]);
+
+  res.json({
+    post: post,
+    comments: postComments
+  });
 });
 
 exports.create_post = [
