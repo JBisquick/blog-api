@@ -19,7 +19,7 @@ router.post('/posts', verifyToken, post_controller.create_post);
 
 router.put('/posts/:id', verifyToken, post_controller.update_post);
 
-router.delete('/posts/:id', post_controller.delete_post);
+router.delete('/posts/:id', verifyToken, post_controller.delete_post);
 
 // Users Routing
 router.post('/login', user_controller.log_in);

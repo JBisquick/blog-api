@@ -81,9 +81,28 @@ exports.create_post = [
   })
 ];
 
-exports.delete_post = asyncHandler( async(req, res, next) => {
-  res.send('Delete Post');
-});
+exports.delete_post = [
+  (req, res, next) => {
+    jwt.verify(req.token, process.env.JWT_SECRET, (err, authData) => {
+      if (err || authData.user.author === false) {
+        res.sendStatus(403);
+      } else {
+        next();
+      }
+    })
+  },
+  
+  asyncHandler( async(req, res, next) => {
+    await Promise.all([
+      Post.findByIdAndDelete(req.params.id).exec(),
+      Comment.deleteMany({ post: req.params.id }).exec()
+    ]);
+
+    res.json({
+      msg: 'IT WORKED'
+    });
+  })
+];
 
 exports.update_post = [
   (req, res, next) => {
