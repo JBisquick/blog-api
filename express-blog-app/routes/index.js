@@ -27,7 +27,7 @@ router.post('/login', user_controller.log_in);
 router.post('/signup', user_controller.sign_up);
 
 // Comments Routing
-router.post('/comments', comment_controller.create_comment)
+router.post('/posts/:postid/comments', verifyToken, comment_controller.create_comment)
 
 router.delete('/comments/:id', comment_controller.delete_comment);
 

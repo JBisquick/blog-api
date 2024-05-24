@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('dotenv').config();
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require('express-validator');
 const Post = require('../models/post');
