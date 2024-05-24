@@ -5,7 +5,14 @@ const Post = require('../models/post');
 const jwt = require('jsonwebtoken');
 
 exports.get_all_posts = asyncHandler( async(req, res, next) => {
-  res.send('Home Page');
+  const allPosts = await Post.find({}, 'title post_date public user')
+    .sort({ post_date: 1 })
+    .populate('user', 'username')
+    .exec();
+
+  res.json({
+    allPosts: allPosts
+  });
 });
 
 exports.get_post = asyncHandler( async(req, res, next) => {
