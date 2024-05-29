@@ -10,7 +10,7 @@ function App() {
   }
 
   if (error) {
-    return <div>There are no animals in the list!</div>;
+    return <div>Could not find posts!</div>;
 
   }
 
