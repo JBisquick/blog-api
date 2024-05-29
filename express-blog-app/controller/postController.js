@@ -18,7 +18,7 @@ exports.get_all_posts = asyncHandler( async(req, res, next) => {
 
 exports.get_post = asyncHandler( async(req, res, next) => {
   const [post, postComments] = await Promise.all([
-    Post.findById(req.params.id).exec(),
+    Post.findById(req.params.id).populate('user', 'username').exec(),
     Comment.find({ post: req.params.id }).exec()
   ]);
 
