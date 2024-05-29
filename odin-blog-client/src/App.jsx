@@ -1,13 +1,25 @@
 import Navigation from './components/Navigation';
-import useState from 'react';
-import usePostList from './hooks/api'
+import PostCard from './components/PostCard';
+import usePostList from './hooks/api';
 
 function App() {
   const { postList, error, loading } = usePostList();
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>There are no animals in the list!</div>;
+
+  }
+
   return (
     <>
       <Navigation></Navigation>
+      {postList.allPosts.map((post) => (
+        <PostCard post={post} key={post._id} ></PostCard>
+      ))}
     </>
   )
 }
