@@ -1,6 +1,6 @@
 import Navigation from './components/Navigation';
 import PostCard from './components/PostCard';
-import usePostList from './hooks/api';
+import { usePostList } from './hooks/api';
 
 function App() {
   const { postList, error, loading } = usePostList();
@@ -11,7 +11,6 @@ function App() {
 
   if (error) {
     return <div>Could not find posts!</div>;
-
   }
 
   return (
