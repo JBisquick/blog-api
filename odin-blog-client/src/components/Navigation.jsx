@@ -7,7 +7,6 @@ function Navigation() {
 
   useEffect(() => {
     setValid(validateToken());
-    console.log(valid);
   },[])
 
   const handleLogout = () => {

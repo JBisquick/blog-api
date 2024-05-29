@@ -1,5 +1,6 @@
 import App from './App';
 import Login from './components/Login'
+import Signup from './components/Signup'
 import ErrorPage from './ErrorPage';
 
 const routes = [
@@ -11,6 +12,11 @@ const routes = [
   {
     path: '/log-in',
     element: <Login />,
+    errorElement: <ErrorPage />
+  },
+  {
+    path: '/sign-up',
+    element: <Signup />,
     errorElement: <ErrorPage />
   }
 ];
