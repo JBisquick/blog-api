@@ -1,4 +1,5 @@
 import { usePostList } from './hooks/api';
+import PostCard from './components/PostCard';
 
 function App() {
   const { postList, error, loading } = usePostList();
@@ -13,7 +14,9 @@ function App() {
 
   return (
     <>
-      <div>Loaded Post</div>
+      {postList.allPosts.map((post) => (
+        <PostCard post={post} key={post._id} ></PostCard>
+      ))}
     </>
   )
 }
