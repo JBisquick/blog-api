@@ -10,7 +10,6 @@ function CommentForm({ post }) {
   },[])
 
   const handleSubmit = (e) => {
-    e.preventDefault();
     const requestOptions = {
       method: 'post',
       headers: { 
