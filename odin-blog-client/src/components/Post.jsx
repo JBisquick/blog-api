@@ -1,6 +1,7 @@
 import { usePost } from '../hooks/api';
 import { useParams } from "react-router-dom";
 import Navigation from './Navigation';
+import Comment from './Comment';
 
 function Post() {
   const { id } = useParams();
@@ -25,6 +26,9 @@ function Post() {
     <h6>{post.post.user.username}</h6>
     <h6>{post.post.post_date}</h6>
     <p>{post.post.content}</p>
+    {post.comments.map((comment) => (
+        <Comment comment={comment} key={comment._id} ></Comment>
+      ))}
     </>
   ); 
 }
