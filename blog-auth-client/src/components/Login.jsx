@@ -1,6 +1,7 @@
 import { Navigate } from 'react-router-dom';
 import { useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
+import Navigation from './Navigation';
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -45,6 +46,7 @@ function Login() {
 
   return (
     <>
+    <Navigation></Navigation>
     <h2>Login</h2>
     <form onSubmit={handleSubmit}>
       <div>
