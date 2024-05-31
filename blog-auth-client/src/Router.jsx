@@ -1,6 +1,7 @@
 import App from './App';
 import ErrorPage from './ErrorPage';
 import Login from './components/Login';
+import CreatePost from './components/CreatePost';
 
 const routes = [
   {
@@ -11,6 +12,11 @@ const routes = [
   {
     path: '/log-in',
     element: <Login />,
+    errorElement: <ErrorPage />
+  },
+  {
+    path: '/create-post',
+    element: <CreatePost />,
     errorElement: <ErrorPage />
   }
 ];
