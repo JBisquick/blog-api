@@ -5,15 +5,47 @@ function CreatePost() {
   const [ title, setTitle ] = useState(''); 
   const [ content, setContent ] = useState(''); 
   const [ pub, setPub ] = useState(false);
+  const [ message, setMessage] = useState([]);
 
   const onOptionChange = (e) => {
     setPub(e.target.value)
   }
 
+  const handleSubmit = () => {
+    const requestOptions = {
+      method: 'post',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify({
+        title: title,
+        content: content,
+        public: pub
+      }),
+    }
+    fetch(`http://localhost:3000/posts`, requestOptions)
+      .then((response) => {
+        if (response.status >= 400) {
+          throw new Error('server error');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data.errors) {
+          setMessage(data.errors);
+        } else {
+          setTitle('');
+          setContent('');
+        }
+      })
+      .catch(err => console.log(err));
+  }
+
   return (
     <>
     <Navigation></Navigation>
-    <form>
+    <form onSubmit={handleSubmit}>
     <div>
         <label htmlFor='title'>Title: </label>
         <input id='title' 
@@ -50,7 +82,11 @@ function CreatePost() {
           checked={pub === 'false'} />
         <label htmlFor='false'>False </label>
       </div>
+      <button type='submit'>Create Post</button>
     </form>
+    {message.map((message) => (
+      <div>{message}</div>    
+    ))}
     </>
   );
 }
